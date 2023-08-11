@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Sine Function Graph</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Interactive Sine Function Graph</h1>
+        <div id="graph-container">
+            <!-- D3.js Graph will be appended here -->
+        </div>
+        <div id="slider-container">
+            <label for="slider">Choose x:</label>
+            <input type="range" id="slider" min="0" max="360" step="1" value="0">
+        </div>
+        <div id="instructions">
+            <p>Use the slider to change the input value.</p>
+        </div>
+    </div>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

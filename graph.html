@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Interactive Graph Example</title>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+<body>
+  <div id="graphContainer"></div>
+  <input type="range" id="slopeSlider" min="-5" max="5" step="0.1" value="1">
+  
+  <script>
+    const container = d3.select("#graphContainer");
+    const svg = container.append("svg").attr("width", 500).attr("height", 300);
+    
+    const xScale = d3.scaleLinear().domain([0, 2 * Math.PI]).range([0, 500]);
+    const yScale = d3.scaleLinear().domain([-1.5, 1.5]).range([300, 0]);
+    
+    const line = d3.line()
+      .x(d => xScale(d.x))
+      .y(d => yScale(d.y));
+    
+    const data = d3.range(0, 2 * Math.PI, 0.1).map(x => ({ x, y: Math.sin(x) }));
+    
+    svg.append("path")
+      .datum(data)
+      .attr("fill", "none")
+      .attr("stroke", "blue")
+      .attr("stroke-width", 2)
+      .attr("d", line);
+    
+    const slopeSlider = document.getElementById("slopeSlider");
+    slopeSlider.addEventListener("input", updateGraph);
+    
+    function updateGraph() {
+      const slope = +slopeSlider.value;
+      const updatedData = data.map(d => ({ x: d.x, y: slope * Math.sin(d.x) }));
+      
+      svg.selectAll("path").datum(updatedData).attr("d", line);
+    }
+  </script>
+</body>
+</html>

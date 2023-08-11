@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Interactive Angle Line Visualization</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    
+    #container {
+      text-align: center;
+      padding: 20px;
+    }
+    
+    #graph {
+      margin-top: 20px;
+    }
+    
+    #slider {
+      width: 80%;
+      margin: 20px auto;
+    }
+  </style>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+<body>
+  <div id="container">
+    <h1>Interactive Angle Line Visualization</h1>
+    <p>
+      Explore the angle of the slope for the function y = sin(x) at different points on the graph.
+    </p>
+    
+    <div id="graph"></div>
+    
+    <div id="slider">
+      <label for="pointSlider">Select a point:</label>
+      <input type="range" id="pointSlider" min="0" max="6.283" step="0.01" value="0">
+    </div>
+    
+    <p id="instructions">
+      Use the slider to select a point on the graph. The red dashed line represents the angle of the slope at that point.
+    </p>
+  </div>
+  
+  <script>
+    const container = d3.select("#graph");
+    const svg = container.append("svg").attr("width", 500).attr("height", 300);
+    
+    const xScale = d3.scaleLinear().domain([0, 2 * Math.PI]).range([0, 500]);
+    const yScale = d3.scaleLinear().domain([-1.5, 1.5]).range([300, 0]);
+    
+    const line = d3.line()
+      .x(d => xScale(d.x))
+      .y(d => yScale(d.y));
+    
+    const data = d3.range(0, 2 * Math.PI, 0.1).map(x => ({ x, y: Math.sin(x) }));
+    
+    svg.append("path")
+      .datum(data)
+      .attr("fill", "none")
+      .attr("stroke", "#6495ED")
+      .attr("stroke-width", 2)
+      .attr("d", line);
+    
+    const angleLine = svg.append("line")
+      .attr("stroke", "red")
+      .attr("stroke-width", 2)
+      .attr("stroke-dasharray", "5,5");
+    
+    const slopeValueText = svg.append("text")
+      .attr("x", 10)
+      .attr("y", 20)
+      .attr("font-size", "14px")
+      .attr("fill", "red");
+    
+    const pointSlider = document.getElementById("pointSlider");
+    pointSlider.addEventListener("input", updateAngleLine);
+    
+    function updateAngleLine() {
+      const selectedX = +pointSlider.value;
+      const selectedData = data.find(d => d.x >= selectedX);
+      
+      if (selectedData) {
+        const slope = Math.cos(selectedData.x); // Derivative of sin(x) is cos(x)
+        const angle = Math.atan(slope); // Angle of slope
+        
+        angleLine
+          .attr("x1", xScale(selectedData.x))
+          .attr("y1", yScale(selectedData.y))
+          .attr("x2", xScale(selectedData.x) + 50 * Math.cos(angle)) // Adjust line length
+          .attr("y2", yScale(selectedData.y) - 50 * Math.sin(angle)); // Adjust line length
+        
+        slopeValueText.text(`Slope: ${slope.toFixed(2)}`)
+          .attr("x", xScale(selectedData.x) + 10)
+          .attr("y", yScale(selectedData.y) - 10);
+      }
+    }
+  </script>
+</body>
+</html>

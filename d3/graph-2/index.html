@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Sin(x) Graph</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Interactive Sin(x) Graph</h1>
+        <div class="graph-container">
+            <div id="graph"></div>
+        </div>
+        <div class="controls">
+            <input type="range" id="slider" min="0" max="360" step="1" value="0">
+            <div id="slope-indicator"></div>
+        </div>
+        <div class="instructions">
+            <p>Use the slider to explore the slope of the sin(x) function at different points.</p>
+        </div>
+    </div>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

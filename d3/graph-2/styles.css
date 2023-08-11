@@ -1,0 +1,39 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.graph-container {
+  margin-top: 20px;
+}
+
+.controls {
+  margin-top: 20px;
+}
+
+#slider {
+  width: 80%;
+  margin: 0 auto;
+}
+
+#slope-indicator {
+  margin-top: 10px;
+  width: 100px;
+  height: 2px;
+  background-color: #ff8c66;
+  position: relative;
+}
+
+.instructions {
+  margin-top: 20px;
+  color: #666;
+}
